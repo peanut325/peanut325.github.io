@@ -1,0 +1,845 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/bg/dog.png">
+  <link rel="icon" href="/img/bg/dog.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="peanut">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="概述 Git 是一个免费的、开源的分布式版本控制系统，可以快速高效地处理从小型到大型的各种项目。 Git 易于学习，占地面积小，性能极快。 它具有廉价的本地库，方便的暂存区域和多个工作流分支等特性。其性能优于 Subversion、CVS、Perforce 和 ClearCase 等版本控制工具。  版本控制 版本控制是一种记录文件内容变化，以便将来查阅特定版本修订情况的系统。 版本控制其实最重要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git">
+<meta property="og:url" content="http://example.com/2021/12/06/git/index.html">
+<meta property="og:site_name" content="peanut&#39; blog">
+<meta property="og:description" content="概述 Git 是一个免费的、开源的分布式版本控制系统，可以快速高效地处理从小型到大型的各种项目。 Git 易于学习，占地面积小，性能极快。 它具有廉价的本地库，方便的暂存区域和多个工作流分支等特性。其性能优于 Subversion、CVS、Perforce 和 ClearCase 等版本控制工具。  版本控制 版本控制是一种记录文件内容变化，以便将来查阅特定版本修订情况的系统。 版本控制其实最重要">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/gitlogo.jpg">
+<meta property="article:published_time" content="2021-12-06T11:05:00.000Z">
+<meta property="article:modified_time" content="2022-02-10T12:12:54.013Z">
+<meta property="article:author" content="peanut">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/gitlogo.jpg">
+  
+  
+  <title>Git - peanut&#39; blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":"flase"},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>peanut325</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/gitback.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Git">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-12-06 19:05" pubdate>
+        2021年12月6日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      44 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Git</h1>
+            
+            <div class="markdown-body">
+              <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote>
+<p>Git 是一个免费的、开源的<strong>分布式版本控制系统</strong>，可以快速高效地处理从小型到大型的各种项目。</p>
+<p>Git 易于学习，占地面积小，性能极快。 它具有廉价的本地库，方便的暂存区域和多个工作流分支等特性。其性能优于 Subversion、CVS、Perforce 和 ClearCase 等版本控制工具。</p>
+</blockquote>
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><ul>
+<li>版本控制是一种<strong>记录文件内容变化</strong>，以便将来查阅特定版本修订情况的系统。</li>
+<li>版本控制其实最重要的是可以<strong>记录文件修改历史记录</strong>，从而让用户能够查<strong>看历史版本，方便版本切换</strong>。</li>
+</ul>
+<h3 id="集中式版本控制工具"><a href="#集中式版本控制工具" class="headerlink" title="集中式版本控制工具"></a>集中式版本控制工具</h3><ul>
+<li><p>CVS、<strong>SVN(Subversion)<strong>、VSS等是集中式版本控制，都有一个</strong>单一的集中管理的服务器</strong>，保存</p>
+<p>所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或</p>
+<p>者提交更新。</p>
+<p><img src="/img/git.assets/image-20220204155611647.png" alt="image-20220204155611647"></p>
+</li>
+<li><p>弊端：在服务器宕机后，所有人都无法更新和提交，也无法协同工作。</p>
+</li>
+</ul>
+<h3 id="分布式版本控制工具"><a href="#分布式版本控制工具" class="headerlink" title="分布式版本控制工具"></a>分布式版本控制工具</h3><ul>
+<li><p><strong>Git</strong>、Mercurial、Bazaar、Darcs等是分布式版本控制工具，客户端提取的不是最新版本的文件快照，而是把代码仓库完整地镜像下来（<strong>本地库</strong>）。一旦有宕机故障，事后都可以通过其他客户端的<strong>本地仓库</strong>进行恢复。</p>
+<p><img src="/img/git.assets/image-20220204155556239.png" alt="image-20220204155556239"></p>
+</li>
+<li><p>优点：</p>
+<ul>
+<li><p>服务器断网的情况下也可以进行开发（因为版本控制是在<strong>本地进行的</strong>），与集中式最大区别就是可以<strong>本地进行版本控制</strong>。</p>
+</li>
+<li><p> 每个客户端保存的也都是整个完整的项目（包含历史记录，更加安全）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Git工作机制"><a href="#Git工作机制" class="headerlink" title="Git工作机制"></a>Git工作机制</h2><p><img src="/img/git.assets/image-20220204155847179.png" alt="image-20220204155847179"></p>
+<p>代码上传到本地库之后，就是以<strong>版本号来控制</strong>，在工作区和暂存区可以删除的数据，而在本地库中就不能删除上一个版本数据。</p>
+<h2 id="Git和托管中心"><a href="#Git和托管中心" class="headerlink" title="Git和托管中心"></a>Git和托管中心</h2><blockquote>
+<p>代码托管中心是基于<strong>网络服务器</strong>的远程代码仓库，一般我们简单称为<strong>远程库</strong>。 </p>
+</blockquote>
+<ul>
+<li>局域网：GitLab</li>
+<li>互联网：GitHub ， Gitee（码云）</li>
+</ul>
+<h1 id="Git安装"><a href="#Git安装" class="headerlink" title="Git安装"></a>Git安装</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sishen47k/article/details/80211002">安装教程</a></p>
+<p>桌面单击右键 -&gt; 点击Git Bush Here 命令行工具 -&gt; 输入<strong>git –version</strong>可以查看版本号，同时在Windows命令行也可以查看</p>
+<h1 id="Git常用命令"><a href="#Git常用命令" class="headerlink" title="Git常用命令"></a>Git常用命令</h1><h2 id="设置用户签名"><a href="#设置用户签名" class="headerlink" title="设置用户签名"></a>设置用户签名</h2><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li><strong>git config –global user.name 用户名</strong></li>
+<li><strong>git config –global user.email 邮箱</strong></li>
+</ul>
+<p><img src="/img/git.assets/image-20220204164042566.png" alt="image-20220204164042566"></p>
+<p>查看目录下的.gitconfig文件可以查看设置的全局签名。</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ul>
+<li><p>签名的作用是<strong>区分不同操作者身份</strong>。用户的签名信息在每一个版本的提交信息中能够看到，以此确认本次提交是谁做的。Git 首次安装<strong>必须设置一下用户签名，否则无法提交代码</strong>。</p>
+</li>
+<li><p>这里设置用户签名和将来登录 GitHub（或其他代码托管中心）的账号<strong>没有任何关系</strong>。</p>
+</li>
+</ul>
+<h2 id="初始化本地库"><a href="#初始化本地库" class="headerlink" title="初始化本地库"></a>初始化本地库</h2><h3 id="基本语法-1"><a href="#基本语法-1" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li><p><strong>git init</strong></p>
+<p><img src="/img/git.assets/image-20220204164750022.png" alt="image-20220204164750022"></p>
+<p>在目录下使用初始化命令后，会生成 .git <strong>的隐藏文件</strong>，表示该文件是git管理的文件。</p>
+</li>
+</ul>
+<h2 id="查看本地库状态"><a href="#查看本地库状态" class="headerlink" title="查看本地库状态"></a>查看本地库状态</h2><h3 id="基本语法-2"><a href="#基本语法-2" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li><p><strong>git status</strong></p>
+<ul>
+<li><p>首次查看，没有文件</p>
+<p><img src="/img/git.assets/image-20220204165055374.png" alt="image-20220204165055374"></p>
+</li>
+<li><p>加入文件后，再次查看，<strong>会检测到未追踪的文件</strong></p>
+<p><img src="/img/git.assets/image-20220204165231877.png" alt="image-20220204165231877"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="添加至暂存区"><a href="#添加至暂存区" class="headerlink" title="添加至暂存区"></a>添加至暂存区</h2><h3 id="基本语法-3"><a href="#基本语法-3" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li><p><strong>git add 文件名</strong></p>
+<p><img src="/img/git.assets/image-20220204170448413.png" alt="image-20220204170448413"></p>
+<p>通过查看本地库状态，可以检测到暂存区有文件。</p>
+</li>
+</ul>
+<h2 id="提交至本地库"><a href="#提交至本地库" class="headerlink" title="提交至本地库"></a>提交至本地库</h2><h3 id="基本语法-4"><a href="#基本语法-4" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li><p><strong>git commit -m “日志信息” 文件名</strong></p>
+<ul>
+<li>提交文件后，查看本地库状态，显示没有文件需要提交。</li>
+</ul>
+<p><img src="/img/git.assets/image-20220204170953605.png" alt="image-20220204170953605"></p>
+<ul>
+<li><p>此时修改文件，检测到有文件被修改</p>
+<p><img src="/img/git.assets/image-20220204171236507.png" alt="image-20220204171236507"></p>
+</li>
+<li><p>需要重新提交后，才会检测到没有文件需要提交。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h2><h3 id="基本语法-5"><a href="#基本语法-5" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li><p><strong>git reflog</strong> </p>
+<p><img src="/img/git.assets/image-20220204173401488.png" alt="image-20220204173401488"></p>
+<p>可以查看我们提交文件的<strong>版本号</strong>（黄字部分）。</p>
+</li>
+<li><p> <strong>git log（查看详细日志）</strong> 可以查看提交用户</p>
+</li>
+</ul>
+<p>  <img src="/img/git.assets/image-20220204173516969.png" alt="image-20220204173516969"></p>
+<h2 id="版本穿梭"><a href="#版本穿梭" class="headerlink" title="版本穿梭"></a>版本穿梭</h2><h3 id="基本语法-6"><a href="#基本语法-6" class="headerlink" title="基本语法"></a>基本语法</h3><ul>
+<li><p><strong>git reset –hard 版本号</strong></p>
+<p><img src="/img/git.assets/image-20220204173940154.png" alt="image-20220204173940154"></p>
+<p>此时指针指向的则是你切换的版本，文件中的内容也会自动切换为以前的内容。</p>
+</li>
+</ul>
+<h1 id="Git分支"><a href="#Git分支" class="headerlink" title="Git分支"></a>Git分支</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><blockquote>
+<p>在版本控制过程中，同时推进多个任务，为每个任务，我们就可以<strong>创建每个任务的单独</strong></p>
+<p><strong>分支。</strong>使用分支意味着程序员可以把自己的工作从开发主线上分离开来，开发自己分支的时</p>
+<p>候，不会影响主线分支的运行。对于初学者而言，分支可以简单理解为副本，一个分支就是</p>
+<p>一个单独的副本。（分支底层其实也是指针的引用）</p>
+</blockquote>
+<p>不同的功能可以创建分支修改，在进行合并。</p>
+<p><img src="/img/git.assets/image-20220204175557258.png" alt="image-20220204175557258"></p>
+<h2 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h2><ul>
+<li>同时并行推进多个功能开发，提高开发效率。</li>
+<li>各个分支在开发过程中，如果某一个分支开发失败，不会对其他分支有任何影响。失败的分支删除重新开始即可。</li>
+</ul>
+<h2 id="分支基本操作"><a href="#分支基本操作" class="headerlink" title="分支基本操作"></a>分支基本操作</h2><h3 id="查看分支"><a href="#查看分支" class="headerlink" title="查看分支"></a>查看分支</h3><h4 id="基本语法-7"><a href="#基本语法-7" class="headerlink" title="基本语法"></a>基本语法</h4><ul>
+<li><p><strong>git branch -v</strong></p>
+<p>此时只有一个master分支，且指针指向master分支</p>
+<p><img src="/img/git.assets/image-20220204175938456.png" alt="image-20220204175938456"></p>
+</li>
+</ul>
+<h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3><h4 id="基本语法-8"><a href="#基本语法-8" class="headerlink" title="基本语法"></a>基本语法</h4><ul>
+<li><p><strong>git branch 分支名</strong> </p>
+<p><img src="/img/git.assets/image-20220204201108735.png" alt="image-20220204201108735"></p>
+<p>此时还是在master分支上，修改master分支上的内容，hot-fix上的分支将不会被修改。</p>
+</li>
+</ul>
+<h3 id="切换分支"><a href="#切换分支" class="headerlink" title="切换分支"></a>切换分支</h3><h4 id="基本语法-9"><a href="#基本语法-9" class="headerlink" title="基本语法"></a>基本语法</h4><ul>
+<li><p><strong>git checkout 分支名</strong></p>
+<ul>
+<li>此时指针切换指向的分支</li>
+</ul>
+<p><img src="/img/git.assets/image-20220204201412835.png" alt="image-20220204201412835"></p>
+<p>此时已经切换到hot-fix分支上。 </p>
+<ul>
+<li><p>此时修改hot-fix上的文件，并提交到本地库，master上并没有出现修改过的数据</p>
+<p><img src="/img/git.assets/image-20220204202650858.png" alt="image-20220204202650858"></p>
+</li>
+<li><p>如果在其他分支修改了但未提交到本地库，master会同步工作区做的修改。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h3><h4 id="基本语法-10"><a href="#基本语法-10" class="headerlink" title="基本语法"></a>基本语法</h4><ul>
+<li>切换到master    <strong>git merge 分支名</strong></li>
+</ul>
+<h4 id="产生冲突"><a href="#产生冲突" class="headerlink" title="产生冲突"></a>产生冲突</h4><ul>
+<li>冲突产生的表现：后面状态为 <strong>MERGING</strong></li>
+<li>冲突产生的原因：合并分支时，两个分支在<strong>同一个文件的同一个位置</strong>有两套完全不同的修改。Git 无法替我们决定使用哪一个。必须<strong>人为决定</strong>新代码内容。</li>
+</ul>
+<h4 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h4><ul>
+<li><p>产生冲突后，编辑有冲突的文件，<strong>删除特殊符号，决定要使用的内容</strong>（特殊符号：&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 当前分支的代码 ======= 合并过来的代码 &gt;&gt;&gt;&gt;&gt;&gt;&gt; hot-fix）</p>
+</li>
+<li><p>此时再合并，注意此时使用 git commit 命令时<strong>不能带文件名</strong></p>
+<p><img src="/img/git.assets/image-20220204212319136.png" alt="image-20220204212319136"></p>
+<p>注意后边的MERGING消失。</p>
+</li>
+</ul>
+<h1 id="Git团队协作机制"><a href="#Git团队协作机制" class="headerlink" title="Git团队协作机制"></a>Git团队协作机制</h1><h2 id="团队内协作"><a href="#团队内协作" class="headerlink" title="团队内协作"></a>团队内协作</h2><p><img src="/img/git.assets/image-20220205095801346.png" alt="image-20220205095801346"></p>
+<h2 id="跨团队协作"><a href="#跨团队协作" class="headerlink" title="跨团队协作"></a>跨团队协作</h2><p><img src="/img/git.assets/image-20220205100103598.png" alt="image-20220205100103598"></p>
+<h1 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h1><blockquote>
+<p>GitHub是一个面向<strong>开源</strong>及私有<strong>软件</strong>项目的托管平台，因为只支持Git作为<strong>唯一的版本库格式</strong>进行托管，故名GitHub。</p>
+</blockquote>
+<h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><p>创建账户后，创建仓库即可，仓库名一般和本地库名字一致。</p>
+<p><img src="/img/git.assets/image-20220205100617036.png" alt="image-20220205100617036"></p>
+<h2 id="远程仓库常用命令"><a href="#远程仓库常用命令" class="headerlink" title="远程仓库常用命令"></a>远程仓库常用命令</h2><h3 id="创建远程仓库别名"><a href="#创建远程仓库别名" class="headerlink" title="创建远程仓库别名"></a>创建远程仓库别名</h3><p>基本语法</p>
+<ul>
+<li><p><strong>git remote -v</strong> <strong>查看当前所有远程地址别名</strong></p>
+</li>
+<li><p><strong>git remote add</strong> <strong>别名 远程地址</strong> （远程地址为创建好仓库后的生成的https协议地址）</p>
+<p><img src="/img/git.assets/image-20220205101732354.png" alt="image-20220205101732354"></p>
+</li>
+</ul>
+<h3 id="推送本地分支到远程仓库"><a href="#推送本地分支到远程仓库" class="headerlink" title="推送本地分支到远程仓库"></a>推送本地分支到远程仓库</h3><p>基本语法</p>
+<ul>
+<li><p><strong>git push</strong> <strong>别名 分支</strong> （中途需要登录）</p>
+<p><img src="/img/git.assets/image-20220205102206059.png" alt="image-20220205102206059"></p>
+<p>中途需要登录Github服务器在国外，可能会有超时问题，失败后需要重复推送。</p>
+</li>
+</ul>
+<h3 id="克隆远程仓库到本地"><a href="#克隆远程仓库到本地" class="headerlink" title="克隆远程仓库到本地"></a>克隆远程仓库到本地</h3><p>基本语法</p>
+<ul>
+<li><p><strong>git clone</strong> <strong>远程地址</strong></p>
+<p><img src="/img/git.assets/image-20220205103803177.png" alt="image-20220205103803177"></p>
+<p>此时进入克隆出的目录查看，会自动创建别名。</p>
+<p><img src="/img/git.assets/image-20220205103941264.png" alt="image-20220205103941264"></p>
+</li>
+</ul>
+<p>克隆结果：</p>
+<ul>
+<li>拉取代码</li>
+<li>初始化本地库</li>
+<li>创建别名</li>
+</ul>
+<h3 id="拉取远程库内容"><a href="#拉取远程库内容" class="headerlink" title="拉取远程库内容"></a>拉取远程库内容</h3><p>基本语法</p>
+<ul>
+<li><strong>git pull</strong> <strong>远程库地址别名 远程分支名</strong></li>
+</ul>
+<h2 id="团队内协作-1"><a href="#团队内协作-1" class="headerlink" title="团队内协作"></a>团队内协作</h2><ul>
+<li><p>需要邀请成员，成员才可以push</p>
+<p><img src="/img/git.assets/image-20220205110409536.png" alt="image-20220205110409536"></p>
+</li>
+<li><p>填入想要邀请的成员</p>
+</li>
+<li><p>复制地址并发送给邀请的用户</p>
+</li>
+<li><p>被邀请的用户可以在这个账号中的地址栏复制收到邀请的链接，点击接受邀请。</p>
+</li>
+</ul>
+<p>现在团队内成员即可push代码到远程库中。</p>
+<h2 id="跨团队协作-1"><a href="#跨团队协作-1" class="headerlink" title="跨团队协作"></a>跨团队协作</h2><ul>
+<li><p>将远程仓库的地址复制发给邀请跨团队协作的人。</p>
+<p><img src="/img/git.assets/image-20220205115039380.png" alt="image-20220205115039380"></p>
+</li>
+<li><p>在<strong>被邀请人的GitHub</strong> 账号里的地址栏复制收到的链接，然后点击 <strong>Fork</strong> 将项目叉到自己的本地仓库。</p>
+<p><img src="/img/git.assets/image-20220205115057050.png" alt="image-20220205115057050"></p>
+</li>
+<li><p>编辑后，可以填写提交的描述信息，并提交</p>
+</li>
+<li><p>此时点击pull，创建新的请求。</p>
+<p><img src="/img/git.assets/image-20220205115157598.png" alt="image-20220205115157598"></p>
+</li>
+<li><p>创建请求后，在<strong>邀请人的Github</strong>账号会接收到一个Pull request请求。</p>
+<p><img src="/img/git.assets/image-20220205115436828.png" alt="image-20220205115436828"></p>
+<p>此时可以进入聊天室讨论。</p>
+</li>
+<li><p>邀请人可以点击代码查看修改的地方是否正确，如果无误，可以点击Merge pull request合并代码。</p>
+</li>
+</ul>
+<h1 id="IDEA集成Git"><a href="#IDEA集成Git" class="headerlink" title="IDEA集成Git"></a>IDEA集成Git</h1><h2 id="忽略文件"><a href="#忽略文件" class="headerlink" title="忽略文件"></a>忽略文件</h2><ul>
+<li>在IDEA生成项目时会生成一些特定文件，与项目的实际功能无关，不参与服务器上部署运行。<strong>把它们忽略掉能够屏蔽 IDE 工具之</strong></li>
+</ul>
+<p><strong>间的差异</strong>。</p>
+<h3 id="忽略方法"><a href="#忽略方法" class="headerlink" title="忽略方法"></a>忽略方法</h3><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>直接配置</p>
+<ul>
+<li><p>创建忽略规则文件 xxxx.ignore（前缀名随便起，建议是 git.ignore），这个文件的存放位置原则上在哪里都可以，为了便于让~/.gitconfig 文件引用，建议也放在用户家目录下</p>
+</li>
+<li><p>git.ignore 文件模版内容</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></div></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment"># Compiled class file</span><br>*<span class="hljs-string">.class</span><br><span class="hljs-comment"># Log file</span><br>*<span class="hljs-string">.log</span><br><span class="hljs-comment"># BlueJ files</span><br>*<span class="hljs-string">.ctxt</span><br><span class="hljs-comment"># Mobile Tools for Java (J2ME)</span><br><span class="hljs-string">.mtj.tmp/</span><br><span class="hljs-comment"># Package Files #</span><br>*<span class="hljs-string">.jar</span><br>*<span class="hljs-string">.war</span><br>*<span class="hljs-string">.nar</span><br>*<span class="hljs-string">.ear</span><br>*<span class="hljs-string">.zip</span><br>*<span class="hljs-string">.tar.gz</span><br>*<span class="hljs-string">.rar</span><br><span class="hljs-comment"># virtual machine crash logs, see </span><br>http:<span class="hljs-string">//www.java.com/en/download/help/error_hotspot.xml</span><br>hs_err_pid*<br><span class="hljs-string">.classpath</span><br><span class="hljs-string">.project</span><br><span class="hljs-string">.settings</span><br>target<br><span class="hljs-string">.idea</span><br>*<span class="hljs-string">.iml</span><br></code></pre></td></tr></table></figure></li>
+<li><p>在.gitconfig 文件中引用忽略配置文件（此文件在 Windows 的家目录中）</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[core]</span><br><span class="hljs-attr">excludesfile</span> = C:/Users/peanut/git.ignore<br></code></pre></td></tr></table></figure>
+
+<p>注意：这里要使用“<strong>正斜线（/）</strong>”，不要使用“<strong>反斜线（\）</strong>”</p>
+</li>
+</ul>
+<h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><p>使用IDEA中的 <strong>.ignore 插件</strong>，方便操作。</p>
+<ul>
+<li><p>在插件市场安装插件</p>
+<p><img src="/img/git.assets/image-20220206141514433.png" alt="image-20220206141514433"></p>
+<p>安装完成后记得重启IDEA。</p>
+</li>
+<li><p>创建模板</p>
+<p><img src="/img/git.assets/image-20220206141621443.png" alt="image-20220206141621443"></p>
+<p>填写号name后，<strong>将模板复制到template</strong>区域</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli"><span class="hljs-comment"># Compiled class file</span><br>*<span class="hljs-string">.class</span><br><span class="hljs-comment"># Log file</span><br>*<span class="hljs-string">.log</span><br><span class="hljs-comment"># BlueJ files</span><br>*<span class="hljs-string">.ctxt</span><br><span class="hljs-comment"># Mobile Tools for Java (J2ME)</span><br><span class="hljs-string">.mtj.tmp/</span><br><span class="hljs-comment"># Package Files #</span><br>*<span class="hljs-string">.jar</span><br>*<span class="hljs-string">.war</span><br>*<span class="hljs-string">.nar</span><br>*<span class="hljs-string">.ear</span><br>*<span class="hljs-string">.zip</span><br>*<span class="hljs-string">.tar.gz</span><br>*<span class="hljs-string">.rar</span><br><span class="hljs-comment"># virtual machine crash logs, see </span><br>http:<span class="hljs-string">//www.java.com/en/download/help/error_hotspot.xml</span><br>hs_err_pid*<br><span class="hljs-string">.classpath</span><br><span class="hljs-string">.project</span><br><span class="hljs-string">.settings</span><br>target<br><span class="hljs-string">.idea</span><br>*<span class="hljs-string">.iml</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/git.assets/image-20220206141712522.png" alt="image-20220206141712522"></p>
+</li>
+<li><p>右键单击项目 -&gt; new -&gt; 创建新的.ignore文件</p>
+<p><img src="/img/git.assets/image-20220206142340613.png" alt="image-20220206142340613"></p>
+</li>
+<li><p>此时可以生成选择我们创建的模板</p>
+<p><img src="/img/git.assets/image-20220206142422731.png" alt="image-20220206142422731"></p>
+</li>
+<li><p>生成后忽略的文件夹变为<strong>灰色</strong></p>
+</li>
+<li><p>也可以手动将文件忽略，右键单击</p>
+<p><img src="/img/git.assets/image-20220206142921272.png" alt="image-20220206142921272"></p>
+</li>
+</ul>
+<h2 id="IDEA基本操作"><a href="#IDEA基本操作" class="headerlink" title="IDEA基本操作"></a>IDEA基本操作</h2><p>以下操作的IDEA版本为2021.1.2</p>
+<h3 id="定位Git"><a href="#定位Git" class="headerlink" title="定位Git"></a>定位Git</h3><p>注意先Test是否识别到Git</p>
+<p><img src="/img/git.assets/image-20220205125238450.png" alt="image-20220205125238450"></p>
+<h3 id="创建仓库-1"><a href="#创建仓库-1" class="headerlink" title="创建仓库"></a>创建仓库</h3><p><img src="/img/git.assets/image-20220205135510089.png" alt="image-20220205135510089"></p>
+<h3 id="添加到暂存库"><a href="#添加到暂存库" class="headerlink" title="添加到暂存库"></a>添加到暂存库</h3><p>此时创建的类未追踪，为红色标志，添加至暂存区后类变为绿色，表示添加成功（也可以直接将项目添加至暂存区）。</p>
+<p><img src="/img/git.assets/image-20220205140131889.png" alt="image-20220205140131889"></p>
+<h3 id="提交到本地库"><a href="#提交到本地库" class="headerlink" title="提交到本地库"></a>提交到本地库</h3><p>右键单击项目。</p>
+<p><img src="/img/git.assets/image-20220205135634442.png" alt="image-20220205135634442"></p>
+<p>此时可以选择你要提交的代码，和可以填写提交的描述，commit提交，此时项目的代码从绿色恢复。</p>
+<p><img src="/img/git.assets/image-20220205135755441.png" alt="image-20220205135755441"></p>
+<h3 id="IDEA查看版本号"><a href="#IDEA查看版本号" class="headerlink" title="IDEA查看版本号"></a>IDEA查看版本号</h3><ul>
+<li><p>在左下角单击git</p>
+<p><img src="/img/git.assets/image-20220205141700159.png" alt="image-20220205141700159"></p>
+</li>
+<li><p>切换版本，右键单击，可以直接切换版本，此时代码也会自动修改。</p>
+<p><img src="/img/git.assets/image-20220205141956920.png" alt="image-20220205141956920"></p>
+</li>
+</ul>
+<h2 id="IDEA分支操作"><a href="#IDEA分支操作" class="headerlink" title="IDEA分支操作"></a>IDEA分支操作</h2><h3 id="创建分支-1"><a href="#创建分支-1" class="headerlink" title="创建分支"></a>创建分支</h3><ul>
+<li><p>IDEA右下角，我的显示版本号</p>
+<p><img src="/img/git.assets/image-20220205142645970.png" alt="image-20220205142645970"></p>
+<p><img src="/img/git.assets/image-20220205142759294.png" alt="image-20220205142759294"></p>
+</li>
+</ul>
+<h3 id="切换分支-1"><a href="#切换分支-1" class="headerlink" title="切换分支"></a>切换分支</h3><p>点击分支名，checkout即可直接切换分支。</p>
+<p><img src="/img/git.assets/image-20220205142930237.png" alt="image-20220205142930237"></p>
+<h3 id="合并分支-1"><a href="#合并分支-1" class="headerlink" title="合并分支"></a>合并分支</h3><ul>
+<li>此时在master分支，合并hot-fix分支，即可正常合并。</li>
+</ul>
+<p><img src="/img/git.assets/image-20220205143456587.png" alt="image-20220205143456587"></p>
+<ul>
+<li><p>产生冲突，IDEA会提示冲突文件</p>
+<p><img src="/img/git.assets/image-20220205144338095.png" alt="image-20220205144338095"></p>
+</li>
+</ul>
+<h1 id="IDEA集成Github"><a href="#IDEA集成Github" class="headerlink" title="IDEA集成Github"></a>IDEA集成Github</h1><h2 id="登录Github账号"><a href="#登录Github账号" class="headerlink" title="登录Github账号"></a>登录Github账号</h2><ul>
+<li><p>点击setting -&gt; Version Control -&gt; GitHub</p>
+<p><img src="/img/git.assets/image-20220205145629897.png" alt="image-20220205145629897"></p>
+</li>
+<li><p>可以使用账号密码登录，新版IDEA会跳转到页面登录</p>
+</li>
+<li><p>也可以使用token登录，需要在GitHub中生成token</p>
+<ul>
+<li><p>在GitHub中点击头像 -&gt; setting -&gt; Developer settings</p>
+</li>
+<li><p>创建新token</p>
+<p><img src="/img/git.assets/image-20220205150118340.png" alt="image-20220205150118340"></p>
+</li>
+<li><p>此时输入名字，并勾选下边的所有权限，即可生成</p>
+<p><img src="/img/git.assets/image-20220205150225621.png" alt="image-20220205150225621"></p>
+</li>
+<li><p>注意生成后将token保存好，用于登录</p>
+<p><img src="/img/git.assets/image-20220205150356454.png" alt="image-20220205150356454"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="分享工程"><a href="#分享工程" class="headerlink" title="分享工程"></a>分享工程</h2><ul>
+<li><p>分享目前的工程分支在github上，此时会在你的账户下创建一个<strong>新的仓库</strong></p>
+<p><img src="/img/git.assets/image-20220206103503550.png" alt="image-20220206103503550"></p>
+</li>
+</ul>
+<h2 id="Push到远程库"><a href="#Push到远程库" class="headerlink" title="Push到远程库"></a>Push到远程库</h2><ul>
+<li>进入到push窗口</li>
+</ul>
+<p><img src="/img/git.assets/image-20220206114350085.png" alt="image-20220206114350085"></p>
+<ul>
+<li><p>在push界面中，可以选择你要push的仓库</p>
+<p><img src="/img/git.assets/image-20220206114908889.png" alt="image-20220206114908889"></p>
+</li>
+<li><p>可以自己创建上传的仓库 Define remote </p>
+<p><img src="/img/git.assets/image-20220206121608540.png" alt="image-20220206121608540"></p>
+<p>name可以自己起名，URL为仓库的地址，可以使用https和ssh（<strong>推荐</strong>）</p>
+</li>
+<li><p>可以管理remote连接</p>
+<p><img src="/img/git.assets/image-20220206143720661.png" alt="image-20220206143720661"></p>
+<p><img src="/img/git.assets/image-20220206144053044.png" alt="image-20220206144053044"></p>
+</li>
+</ul>
+<h3 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h3><p>push 是将本地库代码推送到远程库，<strong>如果本地库代码跟远程库代码版本不一致，push 的操作是会被拒绝的</strong>。也就是说，<strong>要想 push 成功，一定要保证本地库的版本要比远程库的版本高</strong>！因此一个成熟的程序员在动手改本地代码之前，一定会先检查下远程库跟本地代码的区别！如果本地的代码版本已经落后，切记要先 pull 拉取一下远程库的代码，将本地代码更新到最新以后，然后再修改，提交，推送！</p>
+<h2 id="Pull拉取远程库到本地库"><a href="#Pull拉取远程库到本地库" class="headerlink" title="Pull拉取远程库到本地库"></a>Pull拉取远程库到本地库</h2><ul>
+<li>进入Pull窗口</li>
+</ul>
+<p><img src="/img/git.assets/image-20220206124004285.png" alt="image-20220206124004285"></p>
+<ul>
+<li><p>此时可以选择拉取</p>
+<p><img src="/img/git.assets/image-20220206125205446.png" alt="image-20220206125205446"></p>
+</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h3><p>pull 是拉取远端仓库代码到本地，如果远程库代码和本地库代码不一致，会自动合并，如果自动合并失败，还会<strong>涉及到手动解决冲突的问题。</strong></p>
+<h2 id="clone代码到本地"><a href="#clone代码到本地" class="headerlink" title="clone代码到本地"></a>clone代码到本地</h2><ul>
+<li><p>进入clone窗口</p>
+<p><img src="/img/git.assets/image-20220206125639369.png" alt="image-20220206125639369"></p>
+</li>
+<li><p>填写url</p>
+<p><img src="/img/git.assets/image-20220206125849820.png" alt="image-20220206125849820"></p>
+</li>
+</ul>
+<h1 id="IDEA集成Gitee"><a href="#IDEA集成Gitee" class="headerlink" title="IDEA集成Gitee"></a>IDEA集成Gitee</h1><blockquote>
+<p>GitHub 服务器在国外，使用 GitHub 作为项目托管网站，如果网速不好的话，严重影响使用体验，甚至会出现登录不上的情况。针对这个情况，大家也可以使用<strong>国内的项目托管网站-码云</strong>。码云是开源中国推出的基于 Git 的代码托管服务中心。</p>
+</blockquote>
+<h2 id="绑定账户"><a href="#绑定账户" class="headerlink" title="绑定账户"></a>绑定账户</h2><ul>
+<li><p>需要登录Gitee，绑定邮箱</p>
+<p><img src="/img/git.assets/image-20220206134133472.png" alt="image-20220206134133472"></p>
+</li>
+<li><p>在IDEA插件市场安装Gitee插件，安装完成后重启IDEA</p>
+<p><img src="/img/git.assets/image-20220206134243601.png" alt="image-20220206134243601"></p>
+</li>
+<li><p>绑定账户</p>
+<p><img src="/img/git.assets/image-20220206134442798.png" alt="image-20220206134442798"></p>
+</li>
+<li><p>此时可以使用Gitee操作仓库，步骤与Github基本一致</p>
+</li>
+</ul>
+<h2 id="Gitee中导入Github仓库"><a href="#Gitee中导入Github仓库" class="headerlink" title="Gitee中导入Github仓库"></a>Gitee中导入Github仓库</h2><ul>
+<li><p>在创建仓库时点击<strong>导入</strong></p>
+<p><img src="/img/git.assets/image-20220206135213311.png" alt="image-20220206135213311"></p>
+</li>
+<li><p>填写<strong>URL</strong></p>
+<p><img src="/img/git.assets/image-20220206135330077.png" alt="image-20220206135330077"></p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Git/">Git</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Git/">Git</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/30/nginx/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Nginx</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/11/05/linux/">
+                        <span class="hidden-mobile">Linux</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
