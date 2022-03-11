@@ -16,19 +16,41 @@
   <meta name="author" content="peanut">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://example.com/archives/2021/12/index.html">
+    <meta name="description" content="yum配置镜像源 在使用yum下载时，会出现找不到镜像源和下载速度慢的问题，由于下载的源在国外，所以配置国内的源可以加快下载速度。   进入到yum配置文件 cd &#x2F;etc&#x2F;yum.repos.d&#x2F;  创建备份文件夹 mkdir centos.back  备份系统源 mv  *.repo  centos.back  此时下载阿里的镜像源 wget http:&#x2F;&#x2F;mirrors.aliyun.com">
+<meta property="og:type" content="article">
+<meta property="og:title" content="yum配置镜像源">
+<meta property="og:url" content="http://example.com/2022/02/13/yum%E9%85%8D%E7%BD%AE%E9%95%9C%E5%83%8F%E6%BA%90/index.html">
 <meta property="og:site_name" content="peanut&#39; blog">
+<meta property="og:description" content="yum配置镜像源 在使用yum下载时，会出现找不到镜像源和下载速度慢的问题，由于下载的源在国外，所以配置国内的源可以加快下载速度。   进入到yum配置文件 cd &#x2F;etc&#x2F;yum.repos.d&#x2F;  创建备份文件夹 mkdir centos.back  备份系统源 mv  *.repo  centos.back  此时下载阿里的镜像源 wget http:&#x2F;&#x2F;mirrors.aliyun.com">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/bg/brige.jpg">
+<meta property="article:published_time" content="2022-02-13T01:23:00.000Z">
+<meta property="article:modified_time" content="2022-03-11T14:06:03.794Z">
 <meta property="article:author" content="peanut">
+<meta property="article:tag" content="yum">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/bg/brige.jpg">
   
   
-  <title>归档 - peanut&#39; blog</title>
+  <title>yum配置镜像源 - peanut&#39; blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -151,14 +173,48 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/bg/example.jpg') no-repeat center center;
+         style="background: url('/img/bg/brige.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="yum配置镜像源">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-13 09:23" pubdate>
+        2022年2月13日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      336 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      3 分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -175,40 +231,126 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 8 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2021</p>
-    
-    <a href="/2021/12/06/git/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Git</span>
-      <time style="float: right;">12-06</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">yum配置镜像源</h1>
+            
+            <div class="markdown-body">
+              <h1 id="yum配置镜像源"><a href="#yum配置镜像源" class="headerlink" title="yum配置镜像源"></a>yum配置镜像源</h1><blockquote>
+<p>在使用yum下载时，会出现找不到镜像源和下载速度慢的问题，由于下载的源在国外，所以配置国内的源可以加快下载速度。</p>
+</blockquote>
+<ul>
+<li><p>进入到yum配置文件</p>
+<p><code>cd /etc/yum.repos.d/</code></p>
+</li>
+<li><p>创建备份文件夹</p>
+<p><code>mkdir centos.back</code></p>
+</li>
+<li><p>备份系统源</p>
+<p><code>mv  *.repo  centos.back</code></p>
+</li>
+<li><p>此时下载阿里的镜像源</p>
+<p><code>wget http://mirrors.aliyun.com/repo/Centos-7.repo</code></p>
+<ul>
+<li><p>如果出现<strong>wget 报错：无法解析主机位置</strong></p>
+<p><code>echo &#39;nameserver 223.5.5.5&#39;&gt;&gt;/etc/resolv.conf</code>    使用阿里巴巴的域名解析</p>
+</li>
+<li><p>下载完成</p>
+<p><img src="https://gitee.com/ljlGitee001/pictures/raw/master/img/202203112137420.png" alt="image-20220206192708300"></p>
+</li>
+</ul>
+</li>
+<li><p>此时清理yum缓存</p>
+<p><code>yum clean</code></p>
+</li>
+<li><p>并重新建立数据源缓存</p>
+<p><code>yum  makecache</code>  </p>
+</li>
+</ul>
+<p>即可配置镜像源。</p>
 
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/linux/">linux</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/yum/">yum</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/02/13/XML%E6%96%87%E4%BB%B6%E4%B8%8D%E8%83%BD%E8%A2%AB%E6%89%93%E5%8C%85%E9%97%AE%E9%A2%98/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">XML文件不能被打包问题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/12/Nacos%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/">
+                        <span class="hidden-mobile">Nacos配置中心</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -287,6 +429,19 @@
   
 
 
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 
